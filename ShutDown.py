@@ -13,6 +13,10 @@ def shutdown():
     # Send the shutdown command
     os.system(f'shutdown -s -t {total_seconds}')
 
+def cancel_shutdown():
+    # Send the cancel shutdown command
+    os.system('shutdown -a')
+
 def change_theme(theme):
     if theme == "light":
         root.config(bg="white")
@@ -20,12 +24,14 @@ def change_theme(theme):
         hours_label.config(bg="white", fg="black")
         minutes_label.config(bg="white", fg="black")
         shutdown_button.config(bg="lightgray", fg="black")
+        cancel_button.config(bg="lightgray", fg="black")
     elif theme == "dark":
         root.config(bg="gray25")
         label.config(bg="gray25", fg="white")
         hours_label.config(bg="gray25", fg="white")
         minutes_label.config(bg="gray25", fg="white")
         shutdown_button.config(bg="gray50", fg="white")
+        cancel_button.config(bg="gray50", fg="white")
 
 # Create the main application window
 root = tk.Tk()
@@ -34,7 +40,7 @@ root.config(bg="white")  # Default light theme
 
 # Set window size and center content
 window_width = 300
-window_height = 200
+window_height = 250
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 x = (screen_width - window_width) // 2
@@ -43,7 +49,7 @@ root.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
 # Add a label with a description
 label = tk.Label(root, text="Select the time to shutdown:")
-label.place(relx=0.5, rely=0.2, anchor="center")
+label.place(relx=0.5, rely=0.15, anchor="center")
 
 # Create variables for hours and minutes
 hours_var = tk.StringVar(root)
@@ -51,19 +57,23 @@ minutes_var = tk.StringVar(root)
 
 # Create a dropdown menu for selecting hours
 hours_label = tk.Label(root, text="Hours:")
-hours_label.place(relx=0.3, rely=0.4, anchor="center")
+hours_label.place(relx=0.3, rely=0.3, anchor="center")
 hours_menu = tk.OptionMenu(root, hours_var, *range(24))
-hours_menu.place(relx=0.7, rely=0.4, anchor="center")
+hours_menu.place(relx=0.7, rely=0.3, anchor="center")
 
 # Create a dropdown menu for selecting minutes
 minutes_label = tk.Label(root, text="Minutes:")
-minutes_label.place(relx=0.3, rely=0.6, anchor="center")
+minutes_label.place(relx=0.3, rely=0.45, anchor="center")
 minutes_menu = tk.OptionMenu(root, minutes_var, *range(60))
-minutes_menu.place(relx=0.7, rely=0.6, anchor="center")
+minutes_menu.place(relx=0.7, rely=0.45, anchor="center")
 
 # Create a button to initiate shutdown
 shutdown_button = tk.Button(root, text="Shutdown", command=shutdown)
-shutdown_button.place(relx=0.5, rely=0.8, anchor="center")
+shutdown_button.place(relx=0.5, rely=0.6, anchor="center")
+
+# Create a button to cancel shutdown
+cancel_button = tk.Button(root, text="Cancel Shutdown", command=cancel_shutdown)
+cancel_button.place(relx=0.5, rely=0.75, anchor="center")
 
 # Create a menu for selecting theme
 theme_menu = tk.Menu(root)
